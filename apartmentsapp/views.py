@@ -1,14 +1,21 @@
 # from django.shortcuts import render, HttpResponse, redirect
+# from django.views.generic import ListView
+import datetime
 from django.views.generic import ListView
 from .models import Apartment
-
 
 
 class AppListView(ListView):
     """ The landing page with offer of the apartments """
     model = Apartment
-    queryset = Apartment.objects.order_by('-last_update')
     template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['last_update'] = datetime.datetime.now()
+        return context
+
+    
 
 
 

@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
 
 <div class="container-fluid">
     <div class="row">
-
+        Apartments
         <!-- Apartment Entries Column -->
         <div class="col-12 mt-3 left">
             <div class="row">
@@ -13,7 +14,7 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="image-container">
-                                {% if "placeholder" in apartment.upload_image.url %}
+                                {% if apartment.upload_image.url %}
                                 <img class="card-img-top" src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg">
                                 {% else %}
                                 <img class="card-img-top" src=" {{ apartment.upload_image.url }}">
