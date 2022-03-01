@@ -1,10 +1,14 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.views.generic import ListView, FormView, View, DeleteView
+# from django.shortcuts import render, HttpResponse, redirect
+from django.views.generic import ListView
+from .models import Apartment
 
 
-class AppListView(View):
+
+class AppListView(ListView):
     """ The landing page with offer of the apartments """
-    pass
+    model = Apartment
+    queryset = Apartment.objects.order_by('-last_update')
+    template_name = 'index.html'
 
 
 

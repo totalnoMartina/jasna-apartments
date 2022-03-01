@@ -24,16 +24,17 @@ class Gallery(models.Model):
     """ Creating a Gallery for the apartments """
     photos = models.ManyToManyField('Photo', blank=True)
 
-class AppName(models.Model):
-    """ Using name to distinguish between apartments """
-    name = models.CharField(max_length=15, unique=True, blank=False)
+# class AppName(models.Model):
+#     """ Using name to distinguish between apartments """
+#     name = models.CharField(max_length=15, unique=True, blank=False)
 
-    def __str__(self):
-        return f'{self.name}'
+#     def __str__(self):
+#         return f'{self.name}'
 
 class Apartment(models.Model):
     """ Main model of an apartment object """
-    name = models.ForeignKey(AppName, on_delete=models.CASCADE)
+    APP_NAMES = (('TONY', 'tony'), ('MATEA', 'matea'), ('MARTINA', 'martina'))
+    name = models.CharField(max_length=10, choices=APP_NAMES)
     slug = models.SlugField(max_length=200, unique=True)
     bedroom_nr = models.IntegerField()
     sofa_bed = models.BooleanField(default=True)
@@ -41,7 +42,7 @@ class Apartment(models.Model):
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='post_app')
     upload_image = CloudinaryField('image')
-    more_images = models.ForeignKey(Gallery, on_delete=models.CASCADE)
+    more_images = CloudinaryField('another_image')
     last_update = models.DateField(auto_now=True)
     description = models.TextField(max_length=3000)
     
@@ -54,9 +55,10 @@ class Booking(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
     booking_id = models.UUIDField(default=uuid.uuid4, editable=False, max_length=8)
-    status = models.CharField(max_length=3, choices=STATUS)
+    status = models.IntegerField(choices=STATUS, default=0)
     check_in = models.DateField()
     check_out = models.DateField()
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return f'From = {self.check_in.strftime("%d-%b-%Y %H:%M")} To = {self.check_out.strftime("%d-%b-%Y %H:%M")}'

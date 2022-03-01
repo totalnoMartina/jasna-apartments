@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Apartment Entries Column -->
+        <div class="col-12 mt-3 left">
+            <div class="row">
+                {% for apartment in apartment_list %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="image-container">
+                                {% if "placeholder" in apartment.upload_image.url %}
+                                <img class="card-img-top" src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg">
+                                {% else %}
+                                <img class="card-img-top" src=" {{ apartment.upload_image.url }}">
+                                {% endif %}
+                                <div class="image-flash">
+                                    <p class="author">Author: {{ apartment.owner }}</p>
+                                </div>
+                            </div>
+                            <a href="#" class="post-link">
+                                <h2 class="card-title">{{ apartment.name }}</h2>
+                                <p class="card-text">{{ apartment.bedroom_nr }}</p>
+                            </a>
+                            <hr />
+                            <p class="card-text text-muted h6">{{ apartment.last_update }} <i class="far fa-heart"></i>
+                                {{ apartment.price }} Euros</p>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}
