@@ -2,7 +2,7 @@
 
 
 {% block content %}
-
+{% csrf_token %}
 <div class="container-fluid">
     <div class="row">
         Apartments
@@ -14,8 +14,8 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="image-container">
-                                {% if apartment.upload_image.url %}
-                                <img class="card-img-top" src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg">
+                                {% if not apartment.upload_image.url %}
+                                <img class="card-img-top" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/269536558.jpg?k=24be4ce4e6f46c606af0f3b992ac305b369f3923309b16349428172e17646265&o=&hp=1">
                                 {% else %}
                                 <img class="card-img-top" src=" {{ apartment.upload_image.url }}">
                                 {% endif %}
@@ -39,4 +39,5 @@
             </div>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
